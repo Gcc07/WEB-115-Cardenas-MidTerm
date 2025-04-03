@@ -7,22 +7,22 @@ button.addEventListener('click', function() {
     let remainderToBeAmortized = parseInt(loanAmount - (loanAmount * (downpaymentPercentage / 100)));
     let loanTermInYears = parseInt(prompt("Enter loan term (Either 30 or 15): "));
     let interestRate = 4.5
-    
+    let monthlyPayment = (((interestRate / 12) * remainderToBeAmortized) / (1 - Math.pow(1 + (interestRate / 12), (loanTermInYears * -12)))).toFixed(2);
     let totalInterestPaid = (monthlyPayment * (loanTermInYears * 12)) - remainderToBeAmortized;
-    let monthlyTotal = (monthlyInterestPayment * remainderToBeAmortized) / (1 - (1 + remainderToBeAmortized)) ** (-loanTermInYears * 12);
-    let principlePayment = monthlyTotal - monthlyInterestPayment;
-    console.log(monthlyInterestPayment);
+    let monthlyTotal = (monthlyPayment * remainderToBeAmortized) / (1 - (1 + remainderToBeAmortized)) ** (-loanTermInYears * 12);
+    let principlePayment = monthlyTotal - monthlyPayment;
+    console.log(monthlyPayment);
     console.log(monthlyTotal);
     console.log(principlePayment);
 
     if (loanTermInYears == 15 || loanTermInYears == 30) {
         //console.log("Monthly Payment: " + monthlyPayment);
 
-        let totalLoanAmountIncludingInterest = loanAmount+totalInterest.toFixed(2);
+        let totalLoanAmountIncludingInterest = loanAmount+totalInterestPaid.toFixed(2);
 
 
         let interestInformation = document.createElement("li");
-        interestInformation.innerHTML = ("Interest Rate: " + totalInterest);
+        interestInformation.innerHTML = ("Interest Rate: " + totalInterestPaid);
         information.appendChild(interestInformation);
 
         for (let i = 1; i <= loanTermInYears*12; i++) { 
